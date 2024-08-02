@@ -1,0 +1,211 @@
+﻿@page
+@model ndisforms.Pages.PdfForms.IncidentReportFormModel
+@section PageHeader {
+
+}
+@{
+    ViewData["Title"] = "NDIS Forms | Incident Report";
+    var yescheckd = "";
+    var nocheckd = "";
+    if (Model.NewIRHeader.Toi_reportable_incident)
+        yescheckd = "checked";
+    else
+        nocheckd = "checked";
+
+}
+<div id="loader"></div>
+<div class="row my-3 my-md-2">
+    <div class="col-md-10">
+        <p>
+            <h1>Incident Report Form</h1>
+            <h5>My Choice Support Care</h5>
+        </p>
+    </div>
+    <div class="col-md-2 pr-2">
+        <img class="w-100" src="~/images/logo.png" />
+    </div>
+</div>
+<form method="post" enctype="multipart/form-data" id="ndisir-form">
+    <input type="hidden" asp-for="NewIRHeader.Report_guid" />
+    <!-- Type of incident -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="card">
+                <h4 class="card-header">Type of incident</h4>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="form-check-inline" style="width:350px">
+                                <label class="form-check-label">
+                                    Is it a reportable incident?
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <input type="radio" class="form-check-input" value="1" id="NewIRHeader_Toi_reportable_incident_yes" name="NewIRHeader_Toi_reportable_incident" @yescheckd />
+                                @* <input type="radio" class="form-check-input" value="NewIRHeader.Toi_reportable_incident_yes" asp-for="NewIRHeader.Toi_reportable_incident_yes" name="NewIRHeader_Toi_reportable_incident_yes"> *@
+                                <label class="form-check-label" asp-for="NewIRHeader.Toi_reportable_incident"> Yes</label>
+                            </div>
+                            <div class="form-check-inline">
+                                <input type="radio" class="form-check-input" value="0" id="NewIRHeader_Toi_reportable_incident_no" name="NewIRHeader_Toi_reportable_incident" @nocheckd />
+                                @* <input type="radio" class="form-check-input" value="NewIRHeader.Toi_reportable_incident_no" asp-for="NewIRHeader.Toi_reportable_incident_no" name="NewIRHeader_Toi_reportable_incident_yes"> *@
+                                <label class="form-check-label" asp-for="NewIRHeader.Toi_reportable_incident"> No</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row g-2">
+                                <div class="col-md-7">
+                                    <div class="form-check-inline" style="width:350px">
+                                        <label class="form-check-label">
+                                            If Yes, reportable to:
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" asp-for="NewIRHeader.Toi_ndis" value="NDIS"> NDIS
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" asp-for="NewIRHeader.Toi_other_authority" value="OTHR"> Other Authorities
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-check-inline w-100">
+                                        <input type="text" class="w-100" asp-for="NewIRHeader.Toi_other_authority_text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- staff member Details -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="card">
+                <h4 class="card-header">Name of staff member providing report</h4>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        Names of witnesses: (if applicable)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check-inline w-100">
+                                    <input type="text" class="w-100" asp-for="NewIRHeader.Nosmpr_name_of_witness" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        Report relates to:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check-inline">
+                                    <label class="form-check-label" for="chkbx_toi_hz">
+                                        <input type="checkbox" class="form-check-input" asp-for="NewIRHeader.Nosmpr_rpt_rltd_hazard"> Hazard
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label" for="chkbx_toi_nm">
+                                        <input type="checkbox" class="form-check-input" asp-for="NewIRHeader.Nosmpr_rpt_rltd_nearmiss"> Near-miss
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label" for="chkbx_toi_inc">
+                                        <input type="checkbox" class="form-check-input" asp-for="NewIRHeader.Nosmpr_rpt_rltd_incident"> Incident
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label" for="chkbx_toi_cc">
+                                        <input type="checkbox" class="form-check-input" asp-for="NewIRHeader.Nosmpr_rpt_rltd_concernchange"> Concern/Change
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        Date and time of when issue/incident occurred or was noticed:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check-inline w-100">
+                                    <input class="w-100" asp-for="NewIRHeader.Nosmpr_rpt_dtm" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        Location / Address:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check-inline w-100">
+                                    <input type="text" class="w-100" asp-for="NewIRHeader.Nosmpr_rpt_location" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        Name of Client:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check-inline w-100">
+                                    <input type="text" class="w-100" asp-for="NewIRHeader.Nosmpr_rpt_rltd_nameofclient" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Description of issue being reported -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="card">
+                <h4 class="card-header">Description of issue being reported: (sketch if required)</h4>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <div class="form-check-inline w-100">
+                            <textarea class="w-100" rows="5" maxlength="500" asp-for="NewIRHeader.Doibr_text"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <button type="button" id="btn_submitreport" class="btn btn-primary"> Submit Report</button>
+        </div>
+    </div>
+</form>
+@Html.AntiForgeryToken()
+@section Scripts
+{
+    <script src="~/js/incidentreport.js" asp-append-version="true"></script>
+}

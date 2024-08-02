@@ -8,6 +8,7 @@
     }
   },
   "profiles": {
+	  "hotReloadEnabled": true,
     "http": {
       "commandName": "Project",
       "dotnetRunMessages": true,
