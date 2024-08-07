@@ -1,0 +1,38 @@
+﻿@page
+@model ndisforms.Pages.ViewReportsModel
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "View Incident Reports";
+}
+
+<div class="card">
+    <h4 class="card-header">Incident Reports</h4>
+    <div class="card-body" id="events-list">
+        <div class="row mt-2 table-responsive">
+            <div class="col-md-12">
+                <table class="table table-striped table-sm table-bordered" width="100%" id="Dttbl_incidentReportsView">
+                    <thead>
+                        <tr class="bg-primary text-white">
+                            <th hidden></th>
+                            <th>Report Number</th>
+                            <th>Received Date</th>
+                            <th>Name of Witness</th>
+                            <th></th>
+                            <!-- Add more headers if needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/viewallincidentreports.js"></script>
+}

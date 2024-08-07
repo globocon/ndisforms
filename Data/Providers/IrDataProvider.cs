@@ -7,6 +7,7 @@ namespace ndisforms.Data.Providers
     {
         IR_Header CreateNewIR(IR_Header IrToCreate);
         IR_Header GetIR(int IrId);
+        List<IR_Header> GetIrs();
     }
     public class IrDataProvider : IIrDataProvider
     {
@@ -36,7 +37,12 @@ namespace ndisforms.Data.Providers
         {
             return _context.IR_Header.Where(x => x.Id == IrId).FirstOrDefault();
         }
+        public List<IR_Header>  GetIrs()
+        {
 
+            return _context.IR_Header
+                .ToList();
+        }
 
         public int GetNextIrSequenceValue()
         {

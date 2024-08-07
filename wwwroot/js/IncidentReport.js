@@ -14,7 +14,7 @@ $('#btn_submitreport').on('click', function () {
         'Report_number': null,
         'Toi_reportable_incident': $('#NewIRHeader_Toi_reportable_incident_yes').is(':checked'),
         'Toi_ndis': $('#NewIRHeader_Toi_ndis').is(':checked'),
-        'Ttoi_other_authority': $('#NewIRHeader_Toi_other_authority').is(':checked'),
+        'Toi_other_authority': $('#NewIRHeader_Toi_other_authority').is(':checked'),
         'Toi_other_authority_text': $('#NewIRHeader_Toi_other_authority_text').val(), 
         'Nosmpr_name_of_witness': $('#NewIRHeader_Nosmpr_name_of_witness').val(), 
         'Nosmpr_rpt_rltd_hazard': $('#NewIRHeader_Nosmpr_rpt_rltd_hazard').is(':checked'),

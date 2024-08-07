@@ -6,6 +6,9 @@ namespace ndisforms.Data.Services
     public interface IViewDataService
     {
        IR_Header SaveNewIR(IR_Header IrToCreate);
+     
+
+        List<IR_Header> GetDataIncidentReports { get; }
     }
 
     public class ViewDataService : IViewDataService
@@ -19,6 +22,14 @@ namespace ndisforms.Data.Services
         public IR_Header SaveNewIR(IR_Header IrToCreate)
         {
             return _irDataProvider.CreateNewIR(IrToCreate);
+        }
+        public List<IR_Header> GetDataIncidentReports
+        {
+            get
+            {
+                var IR_Header = _irDataProvider.GetIrs().ToList();
+                return IR_Header;
+            }
         }
     }
 }
