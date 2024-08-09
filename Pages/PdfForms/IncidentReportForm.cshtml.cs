@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ndisforms.Data.Helpers;
 using ndisforms.Data.Models;
 using ndisforms.Data.Services;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+using System.IO;
+using iText.Html2pdf;
 
 namespace ndisforms.Pages.PdfForms
 {
@@ -39,12 +42,17 @@ namespace ndisforms.Pages.PdfForms
             var message = "Error";
             int newirid = 0;
             var irNumber = "";
+            var baseUrl="";
             try
             {
                 var res = _viewDataService.SaveNewIR(NewIRHeader);
 
                 if (res.Id > 0)
                 {
+                     baseUrl = HttpContext.Request.BaseUrl();
+                    _emailAndNotificationService.SendEmailNewIRAsync(res.Id, baseUrl);
+                    // Implement your email sending logic here
+                    return new JsonResult(new { success = true });
                     status = true;
                     message = $"Incident Report created successfully with refrence number {res.Report_number}.";
                     newirid = res.Id;
@@ -53,8 +61,8 @@ namespace ndisforms.Pages.PdfForms
                     try
                     {
                         // Try sending mail
-                        var baseUrl = HttpContext.Request.BaseUrl();
-                        _emailAndNotificationService.SendEmailNewIR(newirid, baseUrl);
+                         baseUrl = HttpContext.Request.BaseUrl();
+                        _emailAndNotificationService.SendEmailNewIRAsync(newirid, baseUrl);
                     }
                     catch (Exception er)
                     {
@@ -70,6 +78,15 @@ namespace ndisforms.Pages.PdfForms
            
 
             return new JsonResult(new { status = status, message = message, newirid = newirid, irNumber = irNumber });
+        }
+
+        public byte[] ConvertHtmlToPdf(string htmlContent)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                HtmlConverter.ConvertToPdf(htmlContent, memoryStream);
+                return memoryStream.ToArray();
+            }
         }
     }
 }
